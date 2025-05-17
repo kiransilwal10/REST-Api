@@ -26,3 +26,4 @@
 /Users/kiransilwal/Documents/Kiran/Career/Internship Prep/GameStore/GameStore.Api/obj/Debug/net9.0/GameStore.Api.pdb
 /Users/kiransilwal/Documents/Kiran/Career/Internship Prep/GameStore/GameStore.Api/obj/Debug/net9.0/GameStore.Api.genruntimeconfig.cache
 /Users/kiransilwal/Documents/Kiran/Career/Internship Prep/GameStore/GameStore.Api/obj/Debug/net9.0/ref/GameStore.Api.dll
+/Users/kiransilwal/Documents/Kiran/Career/Internship Prep/GameStore/GameStore.Api/obj/Debug/net9.0/GameStore.Api.sourcelink.json
