@@ -7,7 +7,8 @@ public static class GamesEndPoints
     const string GetGameEndpointName = "GetGame";
 
     private static readonly List<GameDto> games = [
-       new GameDto(1, "The Legend of Zelda: Breath of the Wild", "Action-adventure", 59.99m, new DateOnly(2017, 3, 3)),
+        //sample data
+  new GameDto(1, "The Legend of Zelda: Breath of the Wild", "Action-adventure", 59.99m, new DateOnly(2017, 3, 3)),
     new GameDto(2, "Super Mario Odyssey", "Platformer", 59.99m, new DateOnly(2017, 10, 27)),
     new GameDto(3, "Hollow Knight", "Metroidvania", 14.99m, new DateOnly(2017, 2, 24)),
     new GameDto(4, "Celeste", "Platformer", 19.99m, new DateOnly(2018, 1, 25)),
@@ -16,7 +17,7 @@ public static class GamesEndPoints
 
     public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("games");
+        var group = app.MapGroup("games").WithParameterValidation();
 
 
         //GET /games
@@ -29,8 +30,7 @@ public static class GamesEndPoints
         .Produces(StatusCodes.Status404NotFound);
 
 
-        //GET /games
-        group.MapGet("/", () => games);
+       
 
         //GET /games/{id}
         group.MapGet("/{id}", (int id) =>
@@ -58,6 +58,7 @@ public static class GamesEndPoints
             games.Add(game);
             return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
         });
+        
 
         //PUT/ games
 
