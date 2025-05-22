@@ -1,5 +1,8 @@
 namespace GameStore.Api.Endpoints;
+
 using GameStore.Api.Dtos;
+using GameStore.Api.Data;
+using GameStore.Api.Entities;
 
 public static class GamesEndPoints
 {
@@ -8,7 +11,7 @@ public static class GamesEndPoints
 
     private static readonly List<GameDto> games = [
         //sample data
-  new GameDto(1, "The Legend of Zelda: Breath of the Wild", "Action-adventure", 59.99m, new DateOnly(2017, 3, 3)),
+    new GameDto(1, "The Legend of Zelda: Breath of the Wild", "Action-adventure", 59.99m, new DateOnly(2017, 3, 3)),
     new GameDto(2, "Super Mario Odyssey", "Platformer", 59.99m, new DateOnly(2017, 10, 27)),
     new GameDto(3, "Hollow Knight", "Metroidvania", 14.99m, new DateOnly(2017, 2, 24)),
     new GameDto(4, "Celeste", "Platformer", 19.99m, new DateOnly(2018, 1, 25)),
@@ -45,17 +48,22 @@ public static class GamesEndPoints
 
         //POST /games
 
-        group.MapPost("/", (CreateGameDto newGame) =>
+        group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) =>
         {
 
-            GameDto game = new GameDto(
-                games.Count + 1,
-                newGame.Name,
-                newGame.Genre,
-                newGame.Price,
-                newGame.ReleaseDate
-            );
-            games.Add(game);
+            Game game = new()
+            {
+                Name =  newGame.Name,
+                Genre = dbContext.Genres.Find(newGame.GenreId),
+                GenreId = newGame.GenreId,
+                Price = newGame.Price,
+                ReleaseDate = newGame.ReleaseDate
+            };
+
+            dbContext.Games.Add(game);
+            dbContext.SaveChanges();
+
+    
             return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
         });
         

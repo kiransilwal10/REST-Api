@@ -16,7 +16,7 @@ if (string.IsNullOrEmpty(connString))
 Console.WriteLine($"Connection string: {connString}");
 
 // Configure DbContext
-builder.Services.AddDbContext<GameStoreDbContext>(options =>
+builder.Services.AddDbContext<GameStoreContext>(options =>
     options.UseSqlite(connString)
         .LogTo(Console.WriteLine, LogLevel.Information));
 
@@ -27,7 +27,7 @@ try
 {
     using (var scope = app.Services.CreateScope())
     {
-        var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
         await dbContext.Database.EnsureCreatedAsync();
         Console.WriteLine("Database created successfully at: " + connString);
     }
